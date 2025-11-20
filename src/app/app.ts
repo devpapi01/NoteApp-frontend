@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [ CommonModule],
+  imports: [ CommonModule,  MatSlideToggleModule,],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
