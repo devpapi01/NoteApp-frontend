@@ -1,0 +1,130 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="toolbar-title">{{ noteId ? 'Éditer la Note' : 'Nouvelle Note' }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-flat-button color="accent" (click)="saveNote()" [disabled]="!note.title.trim()">
+    <mat-icon>save</mat-icon>
+    Enregistrer
+  </button>
+
+  @if (noteId) {
+  <button mat-flat-button color="warn" (click)="deleteNote()" style="margin-left: 10px">
+    <mat-icon>delete</mat-icon>
+    Supprimer
+  </button>
+  }
+</mat-toolbar>
+
+<mat-card class="note-editor-card">
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Titre de la Note</mat-label>
+      <input matInput [(ngModel)]="note.title" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="visibility-select">
+      <mat-label>Visibilité</mat-label>
+      <mat-select [(ngModel)]="note.visibility">
+        <mat-option value="PRIVATE">Privée</mat-option>
+        <mat-option value="PUBLIC">Publique</mat-option>
+        <mat-option value="SHARED">Partagée</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="tag-select-field">
+      <mat-label>Tags</mat-label>
+      <mat-select [(ngModel)]="note.tagslist" multiple>
+        @for (tag of availableTags; track tag) {
+        <mat-option [value]="tag">
+          {{ tag }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="margin-left: 10px">
+      <mat-label>Créer un nouveau Tag</mat-label>
+      <input
+        matInput
+        [(ngModel)]="newTagInput"
+        (keydown.enter)="addTagFromInput($event)"
+        placeholder="Entrez un nouveau tag et appuyez sur Entrée"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        color="primary"
+        (click)="addTagFromInput()"
+        [disabled]="!newTagInput.trim()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+
+    @if(note.visibility==="SHARED"){
+    <mat-form-field appearance="outline" style="margin-left: 10px">
+      <mat-label>Email de partage</mat-label>
+      <input
+        matInput
+        [(ngModel)]="shareEmail"
+        name="shareEmail"
+        required
+        email
+        #emailInput="ngModel"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        color="primary"
+        [disabled]="emailInput.invalid"
+        (click)="shareWithUser()"
+      >
+        <mat-icon>share</mat-icon>
+      </button>
+    </mat-form-field>
+    } @if (noteId && (note.visibility==="SHARED"||note.visibility==="PRIVATE")) {
+    <button matFab extended (click)="generatePublicLink()" style="margin-left: 15px">
+      <mat-icon>public</mat-icon>
+      Rendre publique
+    </button>
+    } @if (error) {
+    <div style="color: red; margin-top: 10px">
+      <mat-icon>error</mat-icon>
+      <strong>Erreur:</strong> {{ error }}
+    </div>
+    }
+
+    <mat-divider style="margin: 20px 0"></mat-divider>
+
+    <mat-tab-group>
+      <mat-tab label="Édition (Markdown)">
+        <div class="tab-content">
+          <mat-form-field appearance="outline" class="full-width editor-field">
+            <mat-label>Contenu de la Note (Markdown)</mat-label>
+            <textarea
+              matInput
+              rows="15"
+              [(ngModel)]="note.contentMd"
+              placeholder="Écrivez votre contenu en Markdown ici..."
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </mat-tab>
+      <mat-tab label="Aperçu">
+        <div class="tab-content markdown-preview">
+          <div [innerHTML]="note.contentMd"></div>
+
+          @if (!note.contentMd) {
+          <p class="placeholder-text">
+            Commencez à écrire dans l'onglet Édition pour voir l'aperçu...
+          </p>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

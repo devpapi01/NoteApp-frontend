@@ -1,0 +1,29 @@
+<div class="public-note-container">
+  @if (note) {
+  <div>
+    <header>
+      <h1>{{ note.title }}</h1>
+      <div>
+        <p>
+          Dernière mise à jour :
+          {{ note.updatedAt | date : 'medium' }}
+        </p>
+        @if (note.tagslist && note.tagslist.length) {
+        <p>
+          Tags :
+          <span class="tag-list">
+            @for (tag of note.tagslist; track tag) {
+            <span class="tag-badge">{{ tag }} </span>
+            }
+          </span>
+        </p>
+        }
+      </div>
+    </header>
+
+    <section [innerHTML]="note.contentMd"></section>
+  </div>
+  } @if (error) {
+  <div style="color: red">{{ this.error }}</div>
+  }
+</div>

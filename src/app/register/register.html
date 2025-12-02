@@ -1,0 +1,35 @@
+<mat-card class="mat-card-register">
+  <mat-toolbar style="align-content: center">Inscription</mat-toolbar>
+  <form
+    [formGroup]="groupForm"
+    (ngSubmit)="onSubmit()"
+    style="padding: 20px; display: flex; flex-direction: column; align-items: center"
+  >
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Email</mat-label>
+      <input type="email" formControlName="email" required matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" required />
+      <button
+        matIconButton
+        type="button"
+        matSuffix
+        (click)="clickEvent($event)"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    @if (error) {
+    <div class="error-message">{{ error }}</div>
+    }
+    <button mat-raised-button [disabled]="!groupForm.valid" type="submit" color="primary">
+      S'inscrire
+    </button>
+  </form>
+  <button style="flex-direction: column; align-self: center" (click)="goToLogin()" matButton>
+    Se connecter
+  </button>
+</mat-card>

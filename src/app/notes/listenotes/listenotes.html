@@ -1,0 +1,86 @@
+<div class="notes-container">
+  <div class="toolbar">
+    <mat-form-field appearance="outline" class="search-bar">
+      <mat-label>Rechercher des notes...</mat-label>
+      <input matInput type="text" [(ngModel)]="searchQuery" (ngModelChange)="loadNotes()" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="filter-select-field">
+      <mat-label>Filtrer par Tags</mat-label>
+      <mat-select [(ngModel)]="selectedTag" (ngModelChange)="loadNotes()">
+        <mat-option [value]=""> Aucun filtre tag </mat-option>
+
+        @for (tag of availableTags; track tag) {
+        <mat-option [value]="tag">{{ tag }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-select-field">
+      <mat-label>Visibilité</mat-label>
+      <mat-select [(ngModel)]="selectedVisibility" (ngModelChange)="loadNotes()">
+        <mat-option selected value="">Toutes</mat-option>
+        <mat-option value="PRIVATE">Privée</mat-option>
+        <mat-option value="SHARED">Partagée</mat-option>
+        <mat-option value="PUBLIC">Publique</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  @if (loading) {
+  <div class="loading">Chargement des notes</div>
+  } @else if (notes.length === 0) {
+  <div class="empty-state">
+    <p>Aucune note trouvée. Créez votre première note !</p>
+  </div>
+  } @if (!loading && notes.length > 0) {
+  <div class="notes-grid">
+    @for (note of notes; track note.id) {
+    <mat-card class="note-card" appearance="outlined" (click)="openNote(note.id)">
+      <mat-card-header>
+        <mat-card-title class="note-header"> {{ note.title }}</mat-card-title>
+
+        <span class="visibility-badge" [class]="note.visibility.toLowerCase()">
+          {{ note.visibility }}
+        </span>
+      </mat-card-header>
+
+      <mat-card-content class="note-content">
+        {{ truncateContent(note.contentMd) }}
+      </mat-card-content>
+
+      <mat-card-actions class="note-footer">
+        <div class="tags">
+          @for (tag of note.tagslist; track $index) {
+          <span class="tag">#{{ tag }}</span>
+          }
+        </div>
+        <span class="date">{{ note.updatedAt | date }}</span>
+      </mat-card-actions>
+    </mat-card>
+    }
+  </div>
+  } @if (totalPages >1) {
+  <div class="pagination">
+    <button mat-stroked-button (click)="previousPage()" [disabled]="currentPage === 0">
+      <mat-icon>arrow_back</mat-icon>
+      Précédent
+    </button>
+    <span>Page {{ currentPage + 1 }} sur {{ totalPages }}</span>
+    <button mat-stroked-button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+      Suivant
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  }
+</div>
+
+<button
+  matFab
+  extended
+  (click)="createNote()"
+  style="position: fixed; bottom: 20px; right: 20px; z-index: 1000"
+>
+  Nouvelle note
+  <mat-icon>add</mat-icon>
+</button>

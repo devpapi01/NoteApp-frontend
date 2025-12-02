@@ -1,0 +1,20 @@
+@if(this.error){
+<div style="color: red">{{ this.error }}</div>
+
+} @for (item of liste; track $index) {
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ item.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ item.contentMd }}</p>
+  </mat-card-content>
+  <mat-card-footer class="example-card-footer">
+    <mat-chip-set aria-label="Tags">
+      @for (i of item.tagslist; track $index) {
+      <mat-chip>{{ i }}</mat-chip>
+      }
+    </mat-chip-set>
+  </mat-card-footer>
+</mat-card>
+}

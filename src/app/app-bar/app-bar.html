@@ -1,0 +1,51 @@
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer
+    #drawer
+    mode="side"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar color="primary" class="sidenav-toolbar">
+      <span>Notes App</span>
+    </mat-toolbar>
+
+    <mat-nav-list>
+      @for (item of navItems; track $index) {
+
+      <a mat-list-item routerLinkActive="active-link" [routerLink]="item.route">
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+      </a>
+
+      }
+      <mat-divider></mat-divider>
+
+      <mat-list-item>Utilisateur: {{ this.userEmail }}</mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <mat-toolbar color="primary" class="main-toolbar">
+      @if (isHandset$|async) {
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      }
+
+      <span class="toolbar-title">Notes App</span>
+
+      <span class="spacer"></span>
+      @if (islogin===false) {
+      <button matButton="filled" (click)="logout()" class="toolbar-icon">Se connecter</button>
+      } @else {
+      <button matButton="filled" (click)="logout()" class="toolbar-icon">Se déconnecter</button>
+      }
+    </mat-toolbar>
+
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
