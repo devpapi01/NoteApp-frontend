@@ -68,7 +68,7 @@ export class Register implements OnInit {
         this.router.navigate(['/notes']);
       },
       error: (err) => {
-        this.error = err.error?.message || err.message || 'Inscription échouée';
+        this.error = err.error?.message;
         console.log(this.error.valueOf());
         this.cdr.detectChanges();
       },

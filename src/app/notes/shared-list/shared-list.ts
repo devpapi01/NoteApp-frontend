@@ -15,10 +15,6 @@ export class SharedList implements OnInit {
   liste: Note[] = [];
   error: string | null = null;
 
-  longText = `The Chihuahua is a Mexican breed of toy dog. It is named for the
-  Mexican state of Chihuahua and is among the smallest of all dog breeds. It is
-  usually kept as a companion animal or for showing.`;
-
   constructor(private noteService: NoteService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -32,7 +28,7 @@ export class SharedList implements OnInit {
         this.cdr.detectChanges();
       },
       error: (err) => {
-        this.error = 'Erreur lors du chargement des notes partagées.';
+        this.error = 'Erreur lors du chargement des notes partagées';
 
         console.error(err);
       },

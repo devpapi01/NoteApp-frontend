@@ -94,7 +94,7 @@ export class Editnote implements OnInit {
 
   saveNote(): void {
     if (!this.note.title.trim()) {
-      alert('Le titre est requis.');
+      alert('Le titre est requis');
       return;
     }
 
@@ -111,14 +111,14 @@ export class Editnote implements OnInit {
 
     saveOperation.subscribe({
       next: (note: Note) => {
-        alert('Note enregistrée avec succès.');
+        alert('Note enregistrée avec succes');
         if (!this.noteId) {
           this.router.navigate(['/notes', note.id]);
         }
       },
       error: (err) => {
-        console.error("Échec de l'enregistrement", err.error.message);
-        alert("Échec de l'enregistrement.");
+        console.error("echec de l'enregistrement", err.error.message);
+        alert("echec de l'enregistrement");
         this.error = err.error.message;
         console.log(this.error);
       },
@@ -128,16 +128,16 @@ export class Editnote implements OnInit {
   deleteNote(): void {
     if (!this.noteId) return;
 
-    const confirmed = confirm('Êtes-vous sûr de vouloir supprimer cette note ?');
+    const confirmed = confirm(' Supprimer cette note ? ');
     if (confirmed) {
       this.noteService.deleteNote(this.noteId).subscribe({
         next: () => {
-          alert('Note supprimée.');
+          alert('note supprimee');
           this.router.navigate(['/notes']);
         },
         error: (err) => {
-          console.error('Échec de la suppression', err.error.message);
-          alert('Échec de la suppression.');
+          console.error('echec de la suppression', err.error.message);
+          alert('echec de la suppresion.');
           this.error = err.error.message;
         },
       });
@@ -156,11 +156,11 @@ export class Editnote implements OnInit {
 
     this.noteService.shareWithUser(this.noteId, this.shareEmail).subscribe({
       next: () => {
-        alert('Note partagée avec succès');
+        alert('note partagée avec succes');
         this.router.navigate(['/notes']);
       },
       error: (err) => {
-        this.error = err.error?.message || 'Echec de partage';
+        this.error = err.error?.message || 'échec de partage';
       },
     });
   }

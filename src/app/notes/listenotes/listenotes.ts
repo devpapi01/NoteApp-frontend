@@ -65,9 +65,6 @@ export class Listenotes implements OnInit {
       next: (tags) => {
         this.availableTags = tags;
       },
-      error: (err) => {
-        console.error('Échec du chargement des tags pour le filtre', err);
-      },
     });
   }
   loadNotes(): void {

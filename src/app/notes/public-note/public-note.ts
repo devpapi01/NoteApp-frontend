@@ -43,7 +43,7 @@ export class PublicNote implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors du chargement de la note publique', err);
-        this.error = err.error?.message || 'Note introuvable ou lien expiré.';
+        this.error = err.error?.message;
       },
     });
   }
