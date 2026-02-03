@@ -2,7 +2,7 @@
 <div style="color: red">{{ this.error }}</div>
 
 } @for (item of liste; track $index) {
-<mat-card class="example-card" appearance="outlined">
+<mat-card class="example-card " style="margin: 10px" appearance="outlined">
   <mat-card-header>
     <mat-card-title>{{ item.title }}</mat-card-title>
   </mat-card-header>
@@ -12,7 +12,7 @@
   <mat-card-footer class="example-card-footer">
     <mat-chip-set aria-label="Tags">
       @for (i of item.tagslist; track $index) {
-      <mat-chip>{{ i }}</mat-chip>
+      <mat-chip style="margin-right: 4px">{{ i }}</mat-chip>
       }
     </mat-chip-set>
   </mat-card-footer>

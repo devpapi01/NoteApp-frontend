@@ -15,7 +15,7 @@ export class SharedList implements OnInit {
   liste: Note[] = [];
   error: string | null = null;
 
-  constructor(private noteService: NoteService, private cdr: ChangeDetectorRef) {}
+  constructor(private noteService: NoteService) {}
 
   ngOnInit(): void {
     this.loadSharedNotes();
@@ -25,7 +25,7 @@ export class SharedList implements OnInit {
     this.noteService.getNotesSharedWithMe().subscribe({
       next: (data) => {
         this.liste = data;
-        this.cdr.detectChanges();
+
       },
       error: (err) => {
         this.error = 'Erreur lors du chargement des notes partagées';

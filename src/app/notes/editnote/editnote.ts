@@ -54,7 +54,7 @@ export class Editnote implements OnInit {
     private noteService: NoteService,
     private tagservice: TagService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
+
     private router: Router
   ) {}
 
@@ -173,7 +173,7 @@ export class Editnote implements OnInit {
         this.publicLink = link;
         alert(`Le lien public est : ${this.getFullPublicUrl()}`);
         this.router.navigate(['/notes']);
-        this.cdr.detectChanges();
+
       },
       error: (err) => {
         console.log(err.error.message);

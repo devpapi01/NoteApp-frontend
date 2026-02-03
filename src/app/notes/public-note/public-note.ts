@@ -18,7 +18,7 @@ export class PublicNote implements OnInit {
   constructor(
     private noteService: NoteService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+
   ) {}
 
   ngOnInit(): void {
@@ -39,11 +39,12 @@ export class PublicNote implements OnInit {
       next: (note) => {
         this.note = note;
 
-        this.cdr.detectChanges();
+
       },
       error: (err) => {
         console.error('Erreur lors du chargement de la note publique', err);
         this.error = err.error?.message;
+
       },
     });
   }

@@ -12,11 +12,11 @@ import { CommonModule } from '@angular/common';
 export class PublicList implements OnInit {
   listToken: String[] = [];
 
-  constructor(private noteService: NoteService, private cdr: ChangeDetectorRef) {}
+  constructor(private noteService: NoteService) {}
 
   ngOnInit() {
     this.noteService.getAllpublicLink().subscribe((data) => {
-      (this.listToken = data), this.cdr.detectChanges();
+      (this.listToken = data);
     });
   }
 }

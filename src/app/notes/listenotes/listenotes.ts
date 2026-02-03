@@ -50,7 +50,7 @@ export class Listenotes implements OnInit {
     private authService: AuthService,
     private tagservice: TagService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+
   ) {}
 
   ngOnInit(): void {
@@ -83,7 +83,7 @@ export class Listenotes implements OnInit {
           }));
 
           this.totalPages = response.page.totalPages;
-          this.cdr.detectChanges();
+
         },
       });
   }
