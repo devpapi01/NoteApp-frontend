@@ -55,4 +55,16 @@ export class AuthService {
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
+
+  refreshToken(): Observable<AuthResponse> {
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    return this.http.post<AuthResponse>(
+      `${this.API_URL}/auth/refresh`,
+      { refreshToken }
+    ).pipe(
+      tap(response => this.setSession(response))
+    );
+  }
+
 }
